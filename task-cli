@@ -1,0 +1,14 @@
+#!/usr/bin/env -S deno run --allow-env --allow-read --allow-write --ext=ts
+
+import { CLI } from "./src/CLI.ts";
+import { FileStorage } from "./src/Storage.ts";
+import { Logger } from "./src/Logger.ts";
+import { TaskService } from "./src/TaskService.ts";
+
+try {
+  const taskService = new TaskService(new FileStorage());
+  new CLI(taskService).execute(Deno.args);
+} catch (error) {
+  Logger.error(error);
+  Deno.exit(1);
+}
